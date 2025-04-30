@@ -85,6 +85,18 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.08);
             animation: fadeIn 0.5s;
         }
+        #workTime {
+            text-align: center;
+            font-size: 20px;
+            color: #3498db;
+            font-weight: bold;
+            margin: 25px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.08);
+            animation: fadeIn 0.5s;
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -96,7 +108,7 @@
         <div class="header">
             <h1 class="title"><i class="fas fa-calculator"></i> 智能工资计算器</h1>
             <p class="subtitle">由「大学一点通」团队开发</p>
-<p class="subtitle">更多信息，欢迎关注“大学一点通”公众号</p>
+            <p class="subtitle">更多信息，欢迎关注“大学一点通”公众号</p>
         </div>
 
         <div class="input-group">
@@ -131,11 +143,11 @@
             <input type="number" id="dailySalary" min="0" value="0" placeholder="输入每日薪资">
         </div>
 
+        <div id="workTime">工作时长：0天0小时</div>
         <div id="result">应发工资：0元</div>
     </div>
 
     <script>
-        // 原有计算逻辑保持不变...
         function calculateSalary() {
             const start = document.getElementById('startTime').value;
             const end = document.getElementById('endTime').value;
@@ -146,10 +158,14 @@
                 const startDate = new Date(start);
                 const endDate = new Date(end);
                 const diff = endDate - startDate;
+                const totalHours = diff / (1000 * 60 * 60);
+                const days = Math.floor(totalHours / 24);
+                const hours = totalHours % 24;
                 const workDays = diff / (24 * 60 * 60 * 1000);
                 const salary = (workDays - leaveDays) * dailySalary;
                 const finalSalary = salary > 0 ? salary.toFixed(2) : 0;
                 document.getElementById('result').innerHTML = `应发工资：${finalSalary}元`;
+                document.getElementById('workTime').innerHTML = `工作时长：${days}天${hours.toFixed(0)}小时`;
             }
         }
 
@@ -159,3 +175,4 @@
     </script>
 </body>
 </html>
+    
